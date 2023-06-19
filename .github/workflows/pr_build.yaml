@@ -110,34 +110,43 @@ jobs:
 
     outputs:
       tests: ${{ steps.set-matrix.outputs.tests }}
-  
-  integration-tests:
+
+  print-tests:
+    name: Print
     runs-on: ubuntu-22.04
     needs: [build-matrix]
-    permissions:
-      contents: read
     steps:
-      - uses: actions/checkout@v3
-      - name: Build containers
-        run: ./build.sh
-        shell: bash
-        working-directory: ./it
-      - name: Run tests
+      - name: Print tests output
         run: |
-          tests_json=${{ needs.build-matrix.outputs.tests }}
-          echo "Collected tests here: $tests_json"
-          # quoted_tests_json = "'$test_json'"
-          # echo "Quoted collected tests here: $quoted_tests_json"
-          # Access the tests JSON string from the previous step
+          echo "Tests: ${{ needs.build-matrix.outputs.tests }}"
 
-          tests_array="$(echo "$tests_json" | jq -r '.[]')"
-          echo "Tests array: $tests_array" 
-          # Convert the JSON string to an array using jq
+  # integration-tests:
+  #   runs-on: ubuntu-22.04
+  #   needs: [build-matrix]
+  #   permissions:
+  #     contents: read
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Build containers
+  #       run: ./build.sh
+  #       shell: bash
+  #       working-directory: ./it
+  #     - name: Run tests
+  #       run: |
+  #         tests_json=${{ needs.build-matrix.outputs.tests }}
+  #         echo "Collected tests here: $tests_json"
+  #         # quoted_tests_json = "'$test_json'"
+  #         # echo "Quoted collected tests here: $quoted_tests_json"
+  #         # Access the tests JSON string from the previous step
 
-          for test in $tests_array; do
-            echo "Running test: $test"
-            # Execute your test command or script for each test
-          done
+  #         tests_array="$(echo "$tests_json" | jq -r '.[]')"
+  #         echo "Tests array: $tests_array" 
+  #         # Convert the JSON string to an array using jq
+
+  #         for test in $tests_array; do
+  #           echo "Running test: $test"
+  #           # Execute your test command or script for each test
+  #         done
 
   build:
     name: build (linux)
