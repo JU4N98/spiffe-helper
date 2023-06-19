@@ -126,10 +126,11 @@ jobs:
         run: |
           tests_json=${{ needs.build-matrix.outputs.tests }}
           echo "Collected tests here: $tests_json"
-          tests_json='["change-entry-test.sh", "restore-entry-test.sh", "run-go-test.sh", "run-mysql-test.sh", "run-postgres-test.sh"]'
+          quoted_test_json = "'$test_json'"
+          echo "Quoted collected tests here: $quoted_tests_json"
           # Access the tests JSON string from the previous step
 
-          tests_array="$(echo "$tests_json" | jq -r '.[]')"
+          tests_array="$(echo "$quoted_tests_json" | jq -r '.[]')"
           echo "Tests array: $tests_array" 
           # Convert the JSON string to an array using jq
 
