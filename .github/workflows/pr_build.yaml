@@ -104,7 +104,7 @@ jobs:
         run: |
           tests="$(echo -e "default\n$(find .github/tests -maxdepth 1 -type d | grep -Ev 'tests$' | xargs -I % basename % | sort | uniq)")"
           tests_json="$(echo "$tests" | jq -c --slurp --raw-input 'split("\n") | map(select(. != ""))')"
-          echo "tests=$tests_json" >> $GITHUB_OUTPUT
+          echo "tests=$tests_json" >> $GITHUB_ENV
 
     outputs:
       tests: ${{ steps.set-matrix.outputs.tests }}
