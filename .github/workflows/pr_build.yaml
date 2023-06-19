@@ -113,6 +113,8 @@ jobs:
   integration-tests:
     runs-on: ubuntu-22.04
     needs: [build-matrix]
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
       - name: Build containers
@@ -122,9 +124,11 @@ jobs:
       - name: Run tests
         run: |
           tests_json="${{ needs.build-matrix.outputs.tests }}"
+          echo "Collected tests here: $tests_json"
           # Access the tests JSON string from the previous step
 
           tests_array="$(echo "$tests_json" | jq -r '.[]')"
+          echo "Tests array: $tests_array" 
           # Convert the JSON string to an array using jq
 
           for test in $tests_array; do
