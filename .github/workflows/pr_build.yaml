@@ -106,6 +106,7 @@ jobs:
           tests_json="$(echo "$tests" | jq -c --slurp --raw-input 'split("\n") | map(select(. != ""))')"
           echo "tests=$tests_json" >> $GITHUB_ENV
           echo "Collected tests: $tests_json"
+          echo "::set-output name=tests::$tests_json"
 
     outputs:
       tests: ${{ steps.set-matrix.outputs.tests }}
@@ -125,6 +126,8 @@ jobs:
         run: |
           tests_json="${{ needs.build-matrix.outputs.tests }}"
           echo "Collected tests here: $tests_json"
+          tests_json='["change-entry-test.sh", "restore-entry-test.sh", "run-go-test.sh", "run-mysql-test.sh", "run-postgres-test.sh"]'
+        
           # Access the tests JSON string from the previous step
 
           tests_array="$(echo "$tests_json" | jq -r '.[]')"
