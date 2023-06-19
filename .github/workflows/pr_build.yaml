@@ -133,7 +133,7 @@ jobs:
         working-directory: ./it
       - name: Run tests
         run: |
-          tests_array="$(echo ${{ needs.build-matrix.outputs.tests }} | jq -r '.[]')"
+          tests_array="$(echo '${{ needs.build-matrix.outputs.tests }}' | jq -r '.[]')"
           echo "Tests array: $tests_array" 
           # Convert the JSON string to an array using jq
 
