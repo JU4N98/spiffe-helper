@@ -89,7 +89,7 @@ jobs:
       - name: Run clean check
         run: make git-clean-check
 
- build-matrix:
+  build-matrix:
     name: Build matrix
     runs-on: ubuntu-22.04
 
