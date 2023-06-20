@@ -105,8 +105,6 @@ jobs:
           tests="$(find .github/tests -maxdepth 1 -type f -name '*.sh' -exec basename {} \; | sort | uniq)"
           tests_json="$(echo "$tests" | jq -c --slurp --raw-input 'split("\n") | map(select(. != ""))')"
           echo "tests=$tests_json" >> $GITHUB_ENV
-          echo "Collected tests: $tests_json"
-          echo "::set-output name=tests::$tests_json"
 
     outputs:
       tests: ${{ steps.set-matrix.outputs.tests }}
