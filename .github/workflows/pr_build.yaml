@@ -143,7 +143,7 @@ jobs:
             bash "${test}"
             # Execute your test command or script for each test
           done
-        working-directory: ./tests
+        working-directory: ./.github/tests
 
   build:
     name: build (linux)
