@@ -110,14 +110,6 @@ jobs:
     outputs:
       tests: ${{ steps.set-matrix.outputs.tests }}
 
-  print-tests:
-    name: Print
-    runs-on: ubuntu-22.04
-    needs: [build-matrix]
-    steps:
-      - name: Print tests output
-        run: |
-          echo "Tests: ${{ needs.build-matrix.outputs.tests }}"
 
   integration-tests:
     runs-on: ubuntu-22.04
