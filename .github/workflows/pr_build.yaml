@@ -104,7 +104,7 @@ jobs:
         run: |
           tests="$(find .github/tests -maxdepth 1 -type f -name '*.sh' -exec basename {} \; | sort | uniq)"
           tests_json="$(echo "$tests" | jq -c --slurp --raw-input 'split("\n") | map(select(. != ""))')"
-          echo "tests=$tests_json" >> $GITHUB_ENV
+          echo "tests=$tests_json" >> "$GITHUB_ENV"
 
   print-tests:
     name: Print
@@ -113,7 +113,7 @@ jobs:
     steps:
       - name: Print tests output
         run: |
-          echo "Tests: ${{ GITHUB_ENV.tests }}"
+          echo "Tests: ${{ needs.build-matrix.outputs.tests }}"
 
   integration-tests:
     runs-on: ubuntu-22.04
@@ -129,7 +129,7 @@ jobs:
 
       - name: Run tests
         run: |
-          tests_array="$(echo '${{ GITHUB_ENV.tests }}' | jq -r '.[]')"
+          tests_array="$(echo '${{ needs.build-matrix.outputs.tests }}' | jq -r '.[]')"
           echo "Tests array: $tests_array" 
           # Convert the JSON string to an array using jq
 
