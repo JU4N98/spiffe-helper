@@ -131,6 +131,7 @@ jobs:
         run: ./build.sh
         shell: bash
         working-directory: ./it
+
       - name: Run tests
         run: |
           tests_array="$(echo '${{ needs.build-matrix.outputs.tests }}' | jq -r '.[]')"
@@ -139,8 +140,10 @@ jobs:
 
           for test in $tests_array; do
             echo "Running test: $test"
+            bash "${test}"
             # Execute your test command or script for each test
           done
+        working-directory: ./tests
 
   build:
     name: build (linux)
