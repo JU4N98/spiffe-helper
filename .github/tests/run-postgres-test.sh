@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the target directory path
-target_dir="/.github/it"
+target_dir="../it"
 
 # Check if the target directory exists
 if [ ! -d "$target_dir" ]; then
