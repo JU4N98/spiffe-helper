@@ -19,7 +19,7 @@ services:
   
   spiffe-helper:
     build: 
-      context: ../
+      context: ../../
       dockerfile: ./.github/it/spiffe-helper/Dockerfile
 
   postgres-db:
