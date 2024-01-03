@@ -37,6 +37,7 @@ type Config struct {
 	JWTSvidFilename   string `hcl:"jwt_svid_file_name"`
 	JWTBundleFilename string `hcl:"jwt_bundle_file_name"`
 
+	Plugins map[string]map[string]string `hcl:"plugins,block"`
 	// TODO: is there a reason for this to be exposed? and inside of config?
 	ReloadExternalProcess func() error
 	// TODO: is there a reason for this to be exposed? and inside of config?
@@ -45,8 +46,6 @@ type Config struct {
 
 // ParseConfig parses the given HCL file into a SidecarConfig struct
 func ParseConfig(file string) (*Config, error) {
-	sidecarConfig := new(Config)
-
 	// Read HCL file
 	dat, err := os.ReadFile(file)
 	if err != nil {
@@ -54,11 +53,12 @@ func ParseConfig(file string) (*Config, error) {
 	}
 
 	// Parse HCL
-	if err := hcl.Decode(sidecarConfig, string(dat)); err != nil {
+	config := new(Config)
+	if err := hcl.Decode(config, string(dat)); err != nil {
 		return nil, err
 	}
 
-	return sidecarConfig, nil
+	return config, nil
 }
 
 func ValidateConfig(c *Config) error {
